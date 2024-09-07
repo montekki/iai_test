@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Valgrind
-        run: sudo apt update && sudo apt install valgrind
+        run: sudo apt update && sudo apt install valgrind && sudo apt-get install tree
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
         with:
@@ -47,6 +47,9 @@ jobs:
           clean: false
       - name: Compare PR benchmarks
         run: cargo bench --bench play_game -- --baseline=$BASELINE
+
+      - name: Tree
+        run: tree
 
       - name: Archive Performance Data
         uses: actions/upload-artifact@v4

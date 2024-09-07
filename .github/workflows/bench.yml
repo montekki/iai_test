@@ -42,10 +42,10 @@ jobs:
         with:
           ref: ${{ github.base_ref || 'main' }}
       - name: Save baseline
-        run: cargo bench -- --save-baseline=$BASELINE
+        run: cargo bench --bench iai -- --save-baseline=$BASELINE
       - name: Checkout PR
         uses: actions/checkout@v4
         with:
           clean: false
       - name: Compare PR benchmarks
-        run: cargo bench -- --baseline=$BASELINE
+        run: cargo bench --bench iai -- --baseline=$BASELINE

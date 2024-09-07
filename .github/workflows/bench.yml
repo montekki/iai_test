@@ -65,6 +65,13 @@ jobs:
           path: |
             target/iai/iai_test/play_game/play_game_group/bench_play_game/callgrind.bench_play_game.flamegraph.Ir.diff.base@base.svg
 
+      - name: Convert SVG to Base64
+        id: convert
+        run: |
+          # Convert the SVG to Base64 and save to an environment variable
+          base64_encoded=$(base64 target/iai/iai_test/play_game/play_game_group/bench_play_game/callgrind.bench_play_game.flamegraph.Ir.diff.base@base.svg)
+          echo "BASE64_SVG=${base64_encoded}" >> $GITHUB_ENV
+
       - name: Delete all previous comments by workflow
         uses: actions/github-script@v7
         with:
@@ -94,9 +101,12 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            const base64Svg = process.env.BASE64_SVG;
+            const body = `![Flamegraph](data:image/svg+xml;base64,${base64Svg})`;
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `x`,
+              body: body,
             })

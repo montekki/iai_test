@@ -47,3 +47,10 @@ jobs:
           clean: false
       - name: Compare PR benchmarks
         run: cargo bench --bench play_game -- --baseline=$BASELINE
+
+      - name: Archive Performance Data
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-data
+          path: |
+            target/iai/*.svg

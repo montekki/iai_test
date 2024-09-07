@@ -18,7 +18,12 @@ jobs:
   iai:
     runs-on: ubuntu-latest
     permissions:
+      actions: read
+      contents: read
+      deployments: read
+      packages: none
       pull-requests: write
+      security-events: write
     steps:
       - uses: actions/checkout@v4
       - name: Install Valgrind

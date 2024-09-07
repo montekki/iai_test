@@ -16,6 +16,7 @@ concurrency:
 name: bench
 jobs:
   iai:
+    runs-on: ubuntu-latest
     # Only run benchmarks in merge groups and on main
     if: github.event_name != 'pull_request'
     steps:

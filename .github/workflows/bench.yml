@@ -55,7 +55,7 @@ jobs:
       - name: Compare PR benchmarks
         run: |
           res = $(cargo bench --bench play_game -- --baseline=$BASELINE)
-          return res
+          return $res
         id: comparison
 
       - name: Tree

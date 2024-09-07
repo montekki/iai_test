@@ -6,6 +6,7 @@ on:
 
 env:
   BASELINE: base
+  CARGO_TERM_COLOR: never
   IAI_CALLGRIND_RUNNER: iai-callgrind-runner
 
 concurrency:

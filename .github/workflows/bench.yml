@@ -69,7 +69,7 @@ jobs:
         id: convert
         run: |
           # Convert the SVG to Base64 and save to an environment variable
-          base64_encoded=$(base64 target/iai/iai_test/play_game/play_game_group/bench_play_game/callgrind.bench_play_game.flamegraph.Ir.diff.base@base.svg)
+          base64_encoded=$(base64 -w 0 target/iai/iai_test/play_game/play_game_group/bench_play_game/callgrind.bench_play_game.flamegraph.Ir.diff.base@base.svg)
           echo "BASE64_SVG=${base64_encoded}"
           echo "BASE64_SVG=${base64_encoded}" >> $GITHUB_ENV
 

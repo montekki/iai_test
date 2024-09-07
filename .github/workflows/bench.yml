@@ -75,6 +75,8 @@ jobs:
               repo: context.repo.repo,
             });
 
+            console.log(context)
+            console.log(github)
             // Iterate over all comments and delete each one
             for (const comment of comments) {
               if (comment.user.login === github.actor) { // Only delete comments made by the workflow bot

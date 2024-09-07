@@ -17,6 +17,8 @@ name: bench
 jobs:
   iai:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
       - name: Install Valgrind

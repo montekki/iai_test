@@ -53,7 +53,11 @@ jobs:
         with:
           clean: false
       - name: Compare PR benchmarks
-        run: cargo bench --bench play_game -- --baseline=$BASELINE
+        run: |
+          echo "speedup<<$EOF" >> $GITHUB_OUTPUT
+          cargo bench --bench play_game -- --baseline=$BASELINE >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
+        id: comparison
 
       - name: Tree
         run: tree
@@ -102,8 +106,8 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const base64Svg = process.env.BASE64_SVG;
-            const body = `![Flamegraph](data:image/svg+xml;base64,${base64Svg})`;
+            const base64Svg = process.env.BENCH_DIFF;
+            const body = $${{ steps.comparison.outputs.speedup }};
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,

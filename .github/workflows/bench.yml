@@ -6,7 +6,7 @@ on:
 
 env:
   BASELINE: base
-  CARGO_TERM_COLOR: never
+  CARGO_TERM_COLOR: always
   IAI_CALLGRIND_RUNNER: iai-callgrind-runner
 
 concurrency:
@@ -53,12 +53,14 @@ jobs:
         with:
           clean: false
       - name: Compare PR benchmarks
+        env:
+          CARGO_TERM_COLOR: never
         run: |
-          # EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          cargo --color never bench --bench play_game -- --baseline=$BASELINE # > bla.txt
-          # echo "speedup<<$EOF" >> $GITHUB_OUTPUT
-          # cat bla.txt >> $GITHUB_OUTPUT
-          #echo "$EOF" >> $GITHUB_OUTPUT
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          cargo --color never bench --bench play_game -- --baseline=$BASELINE > bla.txt
+          echo "speedup<<$EOF" >> $GITHUB_OUTPUT
+          cat bla.txt >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
         id: comparison
 
       - name: Tree

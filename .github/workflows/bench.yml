@@ -57,3 +57,16 @@ jobs:
           name: performance-data
           path: |
             target/iai/iai_test/play_game/play_game_group/bench_play_game/*.svg
+
+      - name: Comment on PR
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const artifactUrl = `https://github.com/${{ github.repository }}/suites/${{ github.run_id }}/artifacts`
+            const prNumber = context.payload.pull_request.number;
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: `![Artifact](https://github.com/${{ github.repository }}/suites/${{ github.run_id }}/artifacts) \nArtifact URL: [Download SVG](https://github.com/${{ github.repository }}/suites/${{ github.run_id }}/artifacts)`
+            })

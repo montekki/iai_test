@@ -108,7 +108,7 @@ jobs:
         with:
           script: |
             const base64Svg = process.env.BENCH_DIFF;
-            const body = $${{ steps.comparison.outputs.speedup }};
+            const body = `$${{ steps.comparison.outputs.speedup }}`;
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,

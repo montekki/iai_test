@@ -55,7 +55,7 @@ jobs:
       - name: Compare PR benchmarks
         run: |
           res="$(cargo bench --bench play_game -- --baseline=$BASELINE)"
-          return $res
+          echo "bench_results=$res" >> "$GITHUB_OUTPUT"
         id: comparison
 
       - name: Tree
@@ -90,7 +90,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const body = `\`\`\`console\n${{ steps.comparison.outputs.result }}\n\`\`\``;
+            const body = `\`\`\`console\n${{ steps.comparison.outputs.bench_results }}\n\`\`\``;
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,

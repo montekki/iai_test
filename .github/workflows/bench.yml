@@ -53,4 +53,4 @@ jobs:
         with:
           name: performance-data
           path: |
-            **/target/iai/*.svg
+            target/iai/*.svg

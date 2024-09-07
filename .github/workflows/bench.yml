@@ -5,7 +5,6 @@ on:
     branches: [main]
 
 env:
-  CARGO_TERM_COLOR: always
   BASELINE: base
   IAI_CALLGRIND_RUNNER: iai-callgrind-runner
 

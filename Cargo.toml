@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dev-dependencies]
-iai = "0.1"
+iai-callgrind = "0.13"
 
 [[bench]]
 name = "play_game"

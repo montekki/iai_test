@@ -56,7 +56,7 @@ jobs:
         run: |
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           echo "speedup<<$EOF" >> $GITHUB_OUTPUT
-          cargo bench --bench play_game -- --baseline=$BASELINE >> $GITHUB_OUTPUT
+          cargo bench --bench play_game --color never -- --baseline=$BASELINE >> $GITHUB_OUTPUT
           echo "$EOF" >> $GITHUB_OUTPUT
         id: comparison
 

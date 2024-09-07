@@ -6,6 +6,7 @@ pub fn play_game(n: u32, print: bool) {
 }
 
 fn is_fibonacci_number(n: u32) -> bool {
+    return false;
     for i in 0..=n {
         let (mut previous, mut current) = (0, 1);
         while current < i {

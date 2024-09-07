@@ -53,11 +53,11 @@ jobs:
           clean: false
       - name: Compare PR benchmarks
         run: |
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          cargo --color never bench --bench play_game -- --baseline=$BASELINE > bla.txt
-          echo "speedup<<$EOF" >> $GITHUB_OUTPUT
-          cat bla.txt >> $GITHUB_OUTPUT
-          echo "$EOF" >> $GITHUB_OUTPUT
+          # EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          cargo --color never bench --bench play_game -- --baseline=$BASELINE # > bla.txt
+          # echo "speedup<<$EOF" >> $GITHUB_OUTPUT
+          # cat bla.txt >> $GITHUB_OUTPUT
+          #echo "$EOF" >> $GITHUB_OUTPUT
         id: comparison
 
       - name: Tree

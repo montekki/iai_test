@@ -69,14 +69,10 @@ jobs:
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
-          github-token: $${{ secrets.GITHUB_TOKEN }}
           script: |
-            const artifactUrl = `https://github.com/${{ github.repository }}/suites/${{ github.run_id }}/artifacts`
-            const prNumber = context.payload.pull_request.number;
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: prNumber,
-              body: `![Artifact](https://github.com/${{ github.repository }}/suites/${{ github.run_id }}/artifacts) \nArtifact URL: [Download SVG](https://github.com/${{ github.repository }}/suites/${{ github.run_id }}/artifacts)`
+              body: `x`,
             })

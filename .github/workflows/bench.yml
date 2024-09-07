@@ -56,4 +56,4 @@ jobs:
         with:
           name: performance-data
           path: |
-            target/iai/*.svg
+            target/iai/iai_test/play_game/play_game_group/bench_play_game/*.svg

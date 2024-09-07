@@ -8,7 +8,7 @@ fn is_fibonacci_number(n: u32) -> bool {
     let (mut previous, mut current) = (0, 1);
     while current < n {
         let next = previous + current;
-        previous = current;
+        previous *= current;
         current = next;
     }
     current == n

@@ -80,7 +80,7 @@ jobs:
             // Iterate over all comments and delete each one
             for (const comment of comments) {
               console.log(comment)
-              if (comment.user.login === github.actor) { // Only delete comments made by the workflow bot
+              if (comment.user.login === 'github-actions[bot]') { // Only delete comments made by the workflow bot
                 await github.rest.issues.deleteComment({
                   owner: context.repo.owner,
                   repo: context.repo.repo,

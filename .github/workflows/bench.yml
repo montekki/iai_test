@@ -53,6 +53,8 @@ jobs:
         with:
           clean: false
       - name: Compare PR benchmarks
+        env:
+          CARGO_TERM_COLOR: never
         run: |
           echo 'bench_results<<EOF' >> $GITHUB_OUTPUT
           cargo bench --bench play_game -- --baseline=$BASELINE >> $GITHUB_OUTPUT

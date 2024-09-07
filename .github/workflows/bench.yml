@@ -54,8 +54,9 @@ jobs:
           clean: false
       - name: Compare PR benchmarks
         run: |
-          res="$(cargo bench --bench play_game -- --baseline=$BASELINE)"
-          echo "bench_results=$res" >> "$GITHUB_OUTPUT"
+          echo 'bench_results<<EOF' >> $GITHUB_OUTPUT
+          cargo bench --bench play_game -- --baseline=$BASELINE >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
         id: comparison
 
       - name: Tree

@@ -59,7 +59,7 @@ jobs:
             target/iai/iai_test/play_game/play_game_group/bench_play_game/*.svg
 
       - name: Comment on PR
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: $${{ secrets.GITHUB_TOKEN }}
           script: |

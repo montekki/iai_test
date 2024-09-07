@@ -17,6 +17,13 @@ name: bench
 jobs:
   iai:
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      deployments: read
+      packages: none
+      pull-requests: write
+      security-events: write
     steps:
       - uses: actions/checkout@v4
       - name: Install Valgrind
@@ -46,11 +53,51 @@ jobs:
         with:
           clean: false
       - name: Compare PR benchmarks
-        run: cargo bench --bench play_game -- --baseline=$BASELINE
+        env:
+          CARGO_TERM_COLOR: never
+        run: |
+          echo 'bench_results<<EOF' >> $GITHUB_OUTPUT
+          cargo bench --bench play_game -- --baseline=$BASELINE | tee -a $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+        id: comparison
 
-      - name: Archive Performance Data
-        uses: actions/upload-artifact@v4
+      - name: Tree
+        run: tree
+
+      - name: Delete all previous comments by workflow
+        uses: actions/github-script@v7
         with:
-          name: performance-data
-          path: |
-            target/iai/*.svg
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              issue_number: context.issue.number, 
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            console.log(context)
+            console.log(github)
+            // Iterate over all comments and delete each one
+            for (const comment of comments) {
+              console.log(comment)
+              if (comment.user.login === 'github-actions[bot]') { // Only delete comments made by the workflow bot
+                await github.rest.issues.deleteComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: comment.id
+                });
+              }
+            }
+        
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = `\`\`\`console\n${{ steps.comparison.outputs.bench_results }}\n\`\`\``;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body,
+            })

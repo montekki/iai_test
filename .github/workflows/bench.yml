@@ -5,8 +5,8 @@ on:
     branches: [main]
 
 env:
-  BASELINE: base
   CARGO_TERM_COLOR: always
+  BASELINE: base
   IAI_CALLGRIND_RUNNER: iai-callgrind-runner
 
 concurrency:
@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Valgrind
-        run: sudo apt update && sudo apt install valgrind && sudo apt-get install tree
+        run: sudo apt update && sudo apt install valgrind
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
         with:
